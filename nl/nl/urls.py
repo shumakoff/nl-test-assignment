@@ -19,7 +19,7 @@ from rest_framework import routers
 from core import views
 
 router = routers.DefaultRouter()
-router.register(r'pages', views.PageViewSet, basename='pages')
+router.register(r'pages', views.PageViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

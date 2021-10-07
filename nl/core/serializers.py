@@ -1,8 +1,17 @@
 from rest_framework import serializers
-from core.models import Page
+from core.models import Page, ContentBase
 
 
-class PageSerializer(serializers.ModelSerializer):
+class PageSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Represents list of pages available
+    """
+
+    class Meta:
+        model = Page
+        fields = '__all__'
+
+class PageContentSerializer(serializers.ModelSerializer):
     """
     Represents page and it's content
     """

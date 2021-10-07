@@ -1,20 +1,35 @@
 from django.contrib import admin
-from core.models import Page, ContentVideo, ContentAudio, ContentText
+from core.models import Page, ContentBase, ContentVideo, ContentAudio, ContentText
+
+class PageContentInline(admin.TabularInline):
+    model = ContentBase.page.through
+    extra = 1
 
 
 class PageAdmin(admin.ModelAdmin):
+    search_fields = ['title']
+    inlines = [
+        PageContentInline
+    ]
+
+
+class ContentBaseAdmin(admin.ModelAdmin):
+    search_fields = ['title']
+    exclude = ['page']
+    inlines = [
+        PageContentInline
+    ]
+
+
+class ContentVideoAdmin(ContentBaseAdmin):
     pass
 
 
-class ContentVideoAdmin(admin.ModelAdmin):
+class ContentAudioAdmin(ContentBaseAdmin):
     pass
 
 
-class ContentAudioAdmin(admin.ModelAdmin):
-    pass
-
-
-class ContentTextAdmin(admin.ModelAdmin):
+class ContentTextAdmin(ContentBaseAdmin):
     pass
 
 

@@ -15,9 +15,12 @@ class Page(models.Model):
 
 class ContentBase(models.Model):
     title = models.CharField(max_length=250)
-    counter = models.IntegerField()
-    page = models.ManyToManyField(Page)
+    counter = models.PositiveIntegerField(default=0)
+    page = models.ManyToManyField(Page, blank=True)
     objects = InheritanceManager()
+
+    def __str__(self):
+        return f'{self.title}'
 
     def hit(self):
         """ Increases the counter """
