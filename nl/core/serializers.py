@@ -19,11 +19,13 @@ class PageContentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Page
-        fields = ['id', 'title', 'content']
+        fields = '__all__'
 
     def get_content(self, obj):
         page_content = []
         for content in obj.contentbase_set.select_subclasses():
+            rel_order = content.pagecontent_set.get(page_id=obj.id).relative_order
+            setattr(content, 'rel_order', rel_order)
             base_serializer = content.get_serializer()
             serializer = base_serializer(content)
             page_content.append(serializer.data)

@@ -16,7 +16,7 @@ class Page(models.Model):
 class ContentBase(models.Model):
     title = models.CharField(max_length=250)
     counter = models.PositiveIntegerField(default=0)
-    page = models.ManyToManyField(Page, blank=True)
+    page = models.ManyToManyField(Page, through='PageContent', blank=True)
     objects = InheritanceManager()
 
     def __str__(self):
@@ -29,11 +29,24 @@ class ContentBase(models.Model):
     @classmethod
     def get_serializer(cls):
         class BaseSerializer(serializers.ModelSerializer):
+            rel_order = serializers.IntegerField()
             class Meta:
                 model = cls  # this is the main trick here, this is how I tell the serializer about the model class
                 fields = '__all__'
 
         return BaseSerializer  # return the class object so we can use this serializer
+
+
+class PageContent(models.Model):
+    page = models.ForeignKey(Page, on_delete=models.CASCADE)
+    content = models.ForeignKey(ContentBase, on_delete=models.CASCADE)
+    relative_order = models.PositiveIntegerField(blank=True)
+
+    class Meta:
+        ordering = ['-relative_order']
+
+    def __str__(self):
+        return f'{self.page.title}'
 
 
 class ContentVideo(ContentBase):
