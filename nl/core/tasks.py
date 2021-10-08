@@ -5,7 +5,6 @@ from celery.utils.log import get_task_logger
 from core.models import ContentBase
 
 logger = get_task_logger(__name__)
-logging.basicConfig(filename='celery.txt', level=logging.DEBUG)
 
 
 @app.task
