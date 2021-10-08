@@ -16,6 +16,8 @@ def update_hits_task(contentbase_id):
             content = ContentBase.objects.select_for_update(nowait=True).get(id=contentbase_id)
         except OperationalError:
             raise ContentBase.HitInProgress
+        except ContentBase.DoesNotExist:
+            return
 
         return content._hit()
 

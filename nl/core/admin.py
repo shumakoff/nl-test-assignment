@@ -3,6 +3,7 @@ from core.models import Page, ContentBase, ContentVideo, ContentAudio, ContentTe
 
 class PageContentInline(admin.TabularInline):
     model = ContentBase.page.through
+    ordering = ['relative_order']
     extra = 1
 
     # disable green "+" buttons to add new objects in foreign table
@@ -10,6 +11,7 @@ class PageContentInline(admin.TabularInline):
     def get_formset(self, request, obj=None, **kwargs):
         formset = super(PageContentInline, self).get_formset(request, obj, **kwargs)
         formset.form.base_fields['content'].widget.can_add_related = False
+        formset.form.base_fields['content'].widget.can_change_related = False
         return formset
 
 

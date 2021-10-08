@@ -43,7 +43,7 @@ class ContentBase(models.Model):
 class PageContent(models.Model):
     page = models.ForeignKey(Page, on_delete=models.CASCADE)
     content = models.ForeignKey(ContentBase, on_delete=models.CASCADE)
-    relative_order = models.PositiveIntegerField(blank=True)
+    relative_order = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['-relative_order']
@@ -57,18 +57,18 @@ class ContentVideo(ContentBase):
     url_subtitles = models.CharField(max_length=250)
 
     def __str__(self):
-        return f'{self.title} - {self.url_video} at {self.page} with {self.counter}'
+        return f'{self.title} - {self.url_video}'
 
 
 class ContentAudio(ContentBase):
     bitrate = models.IntegerField()
 
     def __str__(self):
-        return f'{self.title} - {self.bitrate} at {self.page} with {self.counter}'
+        return f'{self.title} - {self.bitrate}'
 
 
 class ContentText(ContentBase):
     text = models.TextField()
 
     def __str__(self):
-        return f'{self.title} - {self.text} at {self.page} with {self.counter}'
+        return f'{self.title}'

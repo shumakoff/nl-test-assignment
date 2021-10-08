@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!o8fnuyuef2osm@!_yg$*j$n%m8zk6!!vf=q@j!$fe-tf+#kel
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -107,8 +107,8 @@ REST_FRAMEWORK = {
 }
 
 # celery settings
-BROKER_URL = 'redis://finance:6379'
-CELERY_RESULT_BACKEND = 'redis://finance:6379'
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
