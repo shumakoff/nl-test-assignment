@@ -29,4 +29,5 @@ class PageContentSerializer(serializers.ModelSerializer):
             base_serializer = content.get_serializer()
             serializer = base_serializer(content)
             page_content.append(serializer.data)
+        page_content.sort(key=lambda content: content['rel_order'])
         return page_content
