@@ -23,11 +23,8 @@ class PageContentSerializer(serializers.ModelSerializer):
 
     def get_content(self, obj):
         page_content = []
-        for content in obj.contentbase_set.select_subclasses():
-            rel_order = content.pagecontent_set.get(page_id=obj.id).relative_order
-            setattr(content, 'rel_order', rel_order)
+        for content in obj.contentbase_set.select_subclasses().order_by('pagecontent__relative_order'):
             base_serializer = content.get_serializer()
             serializer = base_serializer(content)
             page_content.append(serializer.data)
-        page_content.sort(key=lambda content: content['rel_order'])
         return page_content

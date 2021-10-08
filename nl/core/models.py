@@ -33,7 +33,6 @@ class ContentBase(models.Model):
     @classmethod
     def get_serializer(cls):
         class BaseSerializer(serializers.ModelSerializer):
-            rel_order = serializers.IntegerField()
             class Meta:
                 model = cls  # this is the main trick here, this is how I tell the serializer about the model class
                 fields = '__all__'
