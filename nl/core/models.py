@@ -19,12 +19,16 @@ class ContentBase(models.Model):
     page = models.ManyToManyField(Page, through='PageContent', blank=True)
     objects = InheritanceManager()
 
+    class HitInProgress(Exception):
+        pass
+
     def __str__(self):
         return f'{self.title}'
 
-    def hit(self):
+    def _hit(self):
         """ Increases the counter """
         self.counter += 1
+        self.save()
 
     @classmethod
     def get_serializer(cls):

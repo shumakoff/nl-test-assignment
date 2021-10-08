@@ -2,18 +2,15 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from core.models import Page
 from core.serializers import PageSerializer, PageContentSerializer
+from core.tasks import update_hits_task
 
 
 def hit(queryset):
     """
-    Increases counter for objects
-    in queryset
+    Increases counter for objects in queryset
     """
-    # TODO: offload this to celery
-    # TODO: select_for_update
     for entry in queryset:
-        entry.hit()
-        entry.save()
+        update_hits_task.delay(entry.id)
 
 
 class PageViewSet(viewsets.ModelViewSet):

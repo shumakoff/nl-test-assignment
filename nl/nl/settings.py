@@ -106,6 +106,14 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+# celery settings
+BROKER_URL = 'redis://finance:6379'
+CELERY_RESULT_BACKEND = 'redis://finance:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Yekaterinburg'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
